@@ -1,61 +1,87 @@
-import { useRef } from 'react';
+import { useState, useEffect } from 'react';
 import {
     Box,
     Heading,
-    Stack,
-    Button,
-    Input,
+    SimpleGrid,
     Tag,
-    Flex,
     Spacer,
+    Image,
+    Center,
+    GridItem,
+    Input,
+    Spinner
 } from '@chakra-ui/react';
+import Header from '../components/Header';
 
-const StoreItem = ({title, price}) => {
+const StoreItem = ({ title, price, image }) => {
     return (
         <Box p={4} borderRadius="lg" borderWidth="1px">
-            <Flex alignItems="center">
-                <Heading size="md">{title}</Heading>
-                <Spacer />
-                <Tag>${price}</Tag>
-            </Flex>
+            <Center>
+                <Image src={image} w={12} />
+            </Center>
+            <Heading
+                size="sm"
+                fontWeight="normal"
+                noOfLines={2}
+                mt={4}
+            >
+                {title}
+            </Heading>
+            <Spacer />
+            <Tag mt={4}>${price}</Tag>
         </Box>
     );
 }
 
-function Store({items, onItemAdd}) {
-    const itemNameRef = useRef();
-    const itemPriceRef = useRef();
+function Store({ items, loading }) {
+    const [filteredItems, setFilteredItems] = useState(items);
+
+    useEffect(() => {
+        setFilteredItems(items);
+    }, [items]);
+
     return (
-        <Box p={4}>
-            <Stack>
-                {items.map((item) => {
-                    return (
-                        <Box>
-                            <StoreItem title={item.title} price={item.price} />
-                        </Box>
-                    );
-                })}
-            </Stack>
-            <Input
-                ref={itemNameRef} mt={10}
-                placeholder="Item name"
-            />
-            <Input
-                ref={itemPriceRef} mt={2}
-                placeholder="price"
-                type="number"
-            />
-            <Button
-                onClick={() => {
-                    onItemAdd({
-                        title: itemNameRef.current.value,
-                        price: itemPriceRef.current.value,
-                    })
-                }}
-                mt={2}
-            >
-                Add Item
-            </Button>
+        <Box>
+            <Header title="FAKE STORE" />
+            {loading ? (
+                <Center mt={6}>
+                    <Spinner />
+                </Center>
+            ) : (
+                <Box p={4}>
+                    <Input
+                        placeholder="Search"
+                        mt={4}
+                        onChange={(e) => {
+                            let f = items.filter((item) => 
+                                item.title.toLowerCase().includes(e.target.value.toLowerCase())
+                            );
+                            console.log('f', f);
+                            setFilteredItems(f);
+                        }}
+                    />
+                    <SimpleGrid
+                        columns={4}
+                        spacing={4}
+                        mt={4}
+                    >
+                        {items.map((item) => {
+                            return (
+                                <Box key={item.id}>
+                                    <GridItem>
+                                        <StoreItem
+                                            // title={item.title}
+                                            // price={item.price}
+                                            // image={item.image}
+                                            {...item}
+                                        />
+                                    </GridItem>
+                                </Box>
+                            );
+                        })}
+                    </SimpleGrid>
+                </Box>
+            )}
         </Box>
     );
 }

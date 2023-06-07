@@ -15,8 +15,8 @@ function Intro() {
             <p>{data.time}</p>
             Hello, {name}
             <div style={{paddingLeft: '300px', justifyContent: 'center'}}>
-                <ul>
-                {todo.map((task) => <ListItem text={task} />)}
+                <ul key={task}>
+                {todo.map((task) => <ListItem text={task}/>)}
                 </ul>
             </div>
         </div>
