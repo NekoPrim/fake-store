@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import axios from 'axios';
-import Store from '../src/components/Store';
+import Store from './components/_tore';
 
 function App() {
   const [storeItems, setStoreItems] = useState([]);
@@ -13,15 +14,27 @@ function App() {
     });
   }, []);
 
-
   return (
-    <Store
-      items={storeItems}
-      loading={loading}
-      onItemAdd={(itemData) => {
-        setStoreItems([...storeItems, itemData])
-      }}
-    />
+    <div>
+      <Router>
+        <Routes>
+          <Route
+            path='/'
+            exact
+            component={(props) => (
+              <Store
+                items={storeItems}
+                loading={loading}
+                onItemAdd={(itemData) => {
+                  setStoreItems([...storeItems, itemData])
+                }}
+              />
+            )} 
+          />
+          <Route>404 page</Route>
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
