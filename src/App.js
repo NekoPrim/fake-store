@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import axios from 'axios';
-import Store from './components/_tore';
+import Store from './components/Store';
+import Product from './components/Product';
 
 function App() {
   const [storeItems, setStoreItems] = useState([]);
@@ -19,10 +20,11 @@ function App() {
       <Router>
         <Routes>
           <Route
-            path='/'
+            path="/"
             exact
-            component={(props) => (
+            Component={(props) => (
               <Store
+                title="store"
                 items={storeItems}
                 loading={loading}
                 onItemAdd={(itemData) => {
@@ -30,6 +32,10 @@ function App() {
                 }}
               />
             )} 
+          />
+          <Route
+            path="/product/:id"
+            Component={(props) => <Product {...props} />}
           />
           <Route>404 page</Route>
         </Routes>
