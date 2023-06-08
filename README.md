@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+YouTube: [XenCodes](https://www.youtube.com/watch?v=DWA1NyC7jEw)
+
 Library: [Chakra](https://chakra-ui.com/getting-started/cra-guide)
 
 API: [Fake Store API](https://fakestoreapi.com/docs)
