@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
     Box,
     SimpleGrid,
@@ -35,12 +36,18 @@ const StoreItem = ({ title, price, image }) => {
     );
 }
 
-function Store({ items, loading }) {
-    const [filteredItems, setFilteredItems] = useState(items);
+function Store() {
+    const [storeItems, setStoreItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [filteredItems, setFilteredItems] = useState([]);
 
     useEffect(() => {
-        setFilteredItems(items);
-    }, [items]);
+        axios.get('https://fakestoreapi.com/products').then(({ data }) => {
+            setLoading(false);
+            setStoreItems(data);
+            setFilteredItems(data);
+        });
+    }, []);
 
     return (
         <Box>
@@ -55,10 +62,9 @@ function Store({ items, loading }) {
                         placeholder="Search"
                         mt={4}
                         onChange={(e) => {
-                            let f = items.filter((item) => 
+                            let f = storeItems.filter((item) => 
                                 item.title.toLowerCase().includes(e.target.value.toLowerCase())
                             );
-                            console.log('f', f);
                             setFilteredItems(f);
                         }}
                     />
@@ -70,11 +76,12 @@ function Store({ items, loading }) {
                         {filteredItems.map((item) => {
                             return (
                                 <Box key={item.id}>
+                                    {console.log('item id', item.id)}
                                     <GridItem>
-                                        <Link to={{
-                                            pathname: `/product/${item.id}`,
-                                            state: item,
-                                        }}>
+                                        <Link
+                                            to={`/product/${item.id}`}
+                                            state={{item}}
+                                        >
                                         <StoreItem
                                             // title={item.title}
                                             // price={item.price}
