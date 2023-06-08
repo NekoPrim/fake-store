@@ -3,7 +3,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Library: [Chakra](https://chakra-ui.com/getting-started/cra-guide)
-**yarn add @chakra-ui/react @emotion/react @emotion/styled framer-motion**
 
 API: [Fake Store API](https://fakestoreapi.com/docs)
 
