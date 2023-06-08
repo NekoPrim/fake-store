@@ -1,25 +1,28 @@
 import { useLocation } from 'react-router-dom';
-import { Box, Heading, Image, Center, Stack, Text, Button, SimpleGrid, GridItem, Tag } from '@chakra-ui/react';
-
-const Header = ({ title }) => {
-    return (
-        <Box p={2} shadow="md">
-            <Heading textAlign="center">{title}</Heading>
-        </Box>
-    );
-}
+import {
+    Box,
+    Heading,
+    Image,
+    Center,
+    Stack,
+    Text,
+    Button,
+    SimpleGrid,
+    GridItem,
+    Tag
+} from '@chakra-ui/react';
+import ProductHeader from './ProductHeader';
 
 function Product() {
     const location = useLocation();
     const { item } = location.state;
-    console.log('item', item);
 
     if (!item) {
         window.location = "/";
     }
     return (
         <Box>
-            <Header title={item.title} />
+            <ProductHeader title={item.title} />
             {/* base and md are for responsive design */}
             <SimpleGrid mt={10} spacing={4} columns={{ base: 1, md: 5}}> 
                 <GridItem colSpan={2} pl={4}>
